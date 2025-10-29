@@ -56,6 +56,4 @@ public class NumberValidatorTests
         var numberValidator = new NumberValidator(precision, scale, allowSigned);
         numberValidator.IsValidNumber(value).Should().BeFalse();
     }
-    
-
 }

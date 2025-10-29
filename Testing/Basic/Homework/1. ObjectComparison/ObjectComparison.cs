@@ -13,21 +13,10 @@ public class ObjectComparison
         var actualTsar = TsarRegistry.GetCurrentTsar();
         var expectedTsar = new Person("Ivan IV The Terrible", 54, 170, 70,
             new Person("Vasili III of Russia", 28, 170, 60, null));
-
-        // Перепишите код на использование Fluent Assertions.
+        
         expectedTsar.Should().BeEquivalentTo(actualTsar, options => 
              options.Excluding(x => x.Id)
                     .Excluding(x => x.Parent.Id));
-        
-        // ClassicAssert.AreEqual(actualTsar.Name, expectedTsar.Name);
-        // ClassicAssert.AreEqual (actualTsar.Age, expectedTsar.Age);
-        // ClassicAssert.AreEqual(actualTsar.Height, expectedTsar.Height);
-        // ClassicAssert.AreEqual(actualTsar.Weight, expectedTsar.Weight);
-        //
-        // ClassicAssert.AreEqual(expectedTsar.Parent!.Name, actualTsar.Parent!.Name);
-        // ClassicAssert.AreEqual(expectedTsar.Parent.Age, actualTsar.Parent.Age);
-        // ClassicAssert.AreEqual(expectedTsar.Parent.Height, actualTsar.Parent.Height);
-        // ClassicAssert.AreEqual(expectedTsar.Parent.Parent, actualTsar.Parent.Parent);
     }
     
     //Основные проблемы, которые я выделелил:
@@ -39,7 +28,8 @@ public class ObjectComparison
     //При падении теста будет непонятно, где находится различие, т.к. будет выведено только True или False
     //3. Неуниверсальность.
     //Такое решение не подходит для написания тестов на большое количество объектов, т.к. необходимо писать метод AreEqual для каждого из объектов.
-    //4. Читаемость:)
+    //4. Читаемость.
+    // Гораздо проще воспринимать несколько методов в одной строке, чем множество дублирующихся строк.
     [Test]
     [Description("Альтернативное решение. Какие у него недостатки?")]
     public void CheckCurrentTsar_WithCustomEquality()
@@ -47,8 +37,7 @@ public class ObjectComparison
         var actualTsar = TsarRegistry.GetCurrentTsar();
         var expectedTsar = new Person("Ivan IV The Terrible", 54, 170, 70,
             new Person("Vasili III of Russia", 28, 170, 60, null));
-
-        // Какие недостатки у такого подхода? 
+        
         ClassicAssert.True(AreEqual(actualTsar, expectedTsar));
     }
 
